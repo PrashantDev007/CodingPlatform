@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class SaveRequests{
 	
-	public static  HashMap<UUID, String> requests=new HashMap<UUID, String>();
+	public static  HashMap<String, String> requests=new HashMap<String, String>();
 
 
 }

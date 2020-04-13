@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 class CompileCode implements CompilerHelper {
 
 	@Autowired
+	SendingAsyncDataToQueue sendingAsyncDataToQueue;
+	@Autowired
 	Run run;
 	
 	@Override
@@ -55,7 +57,12 @@ class CompileCode implements CompilerHelper {
 			}
 			
 			if(error==true)
-			{SaveRequests.requests.put(code.getId(), ans.toString());}
+			{
+				SaveRequests.requests.put(code.getId(), ans.toString());
+				
+				sendingAsyncDataToQueue.sendData(code);
+			
+			}
 			else
 			{
 				run.execute(code);		

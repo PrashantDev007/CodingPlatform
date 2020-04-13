@@ -8,13 +8,22 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.codecentric.boot.admin.server.web.PathUtils;
 
 @Component
 public class Run implements CompilerHelper {
 
+	@Autowired
+	SendingAsyncDataToQueue sendingAsyncDataToQueue;
+	
 	@Override
 	public void execute(Code code) {
 		
@@ -60,10 +69,9 @@ public class Run implements CompilerHelper {
 			}
 				
 			SaveRequests.requests.put(code.getId(), ans.toString());
+			
 
-
-		
-		
+			sendingAsyncDataToQueue.sendData(code);
 		
 		
 		

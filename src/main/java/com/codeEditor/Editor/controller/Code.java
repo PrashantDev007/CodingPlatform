@@ -1,20 +1,15 @@
 package com.codeEditor.Editor.controller;
 
-import java.util.UUID;
+
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
-
-
 public class Code {
 
 	private String code;
-	private UUID id;
+	private String id;
 
-	public Code() {
-		super();
-		
-		this.id = UUID.randomUUID();
+	public Code() {	
 	}
 
 	public String getCode() {
@@ -25,8 +20,11 @@ public class Code {
 		this.code = code;
 	}
 	
-	public UUID getId() {
+	public String getId() {
 		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	
