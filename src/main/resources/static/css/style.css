@@ -1,61 +1,143 @@
-body {
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    justify-content: center;
-    font-size: xx-large;
-    align-items: center;
-    width: auto;
-    font-family: Poppins-Medium;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    background-color: black;
+* {
+    box-sizing: border-box;
 }
 
-#makecall {
-    margin-top: 1%;
+.form {
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
-#textarea {
+.textarea {
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+    width: 100%;
+    min-width: 500px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     height: 500px;
     border-radius: 10px;
     overflow: hidden;
-    padding: 55px 55px 37px;
+    padding: 5px 5px 5px;
     background: #9152f8;
-    background: -webkit-linear-gradient(top, #7579ff, #b224ef);
+    background: -webkit-linear-gradient(top, #00b81f, #a3c000);
 }
 
-textarea {
+#ta,
+#ta2 {
     resize: none;
-    width: 600px;
+    height: 100%;
+    width: 50%;
+    color: rgb(211, 192, 192);
+    background-color: black;
+    font-size: medium;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 100;
+}
+
+.ta {
+    width: 100%;
+}
+
+.inputoutput {
+    display: flex;
+    flex-direction: row;
+}
+
+html {
+    height: 97%;
+    margin: 0;
+    padding: 0;
+    /* background-image: linear-gradient(141deg, #ffc1c1 0%, #ffffff 51%, #ffcece 75%); */
+    background-color: black;
+}
+
+body {
+    height: 100%;
+}
+
+.inputoutput {
+    width: 100%;
+    height: 5%;
+}
+
+.input,
+.output {
+    width: 50%;
+    text-align: center;
+    height: 8%;
+    color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 20px;
+    line-height: 32px;
+    text-indent: 0px;
+    text-rendering: auto;
+    text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+    font-family: Mija;
+}
+
+.heading {
+    height: 8%;
+    color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 30px;
+    line-height: 32px;
+    text-indent: 0px;
+    text-rendering: auto;
+    text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+    font-family: Mija;
 }
 
 #buttonCode {
-    font-family: Poppins-Medium;
-    font-size: 16px;
-    color: black;
-    font-size: xx-large;
-    height: 100px;
-    line-height: 1.2;
-    text-transform: uppercase;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-    width: 100%;
-    height: 50px;
-    outline: none!important;
-    /* border: none;
-    text-transform: none;
-    overflow: visible; */
-    background-color: #abe9d9;
-    border-radius: 10px;
+    height: 5%;
+    width: 10%;
+    text-align: center;
+    margin-top: 2%;
+    text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+    font-family: Mija;
+    font-feature-settings: "onum";
+    background-color: rgb(6, 77, 79);
+    background-origin: padding-box;
+    border-bottom-color: rgb(255, 255, 255);
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-left-color: rgb(255, 255, 255);
+    border-left-style: none;
+    border-left-width: 0px;
+    border-right-color: rgb(255, 255, 255);
+    border-right-style: none;
+    border-right-width: 0px;
+    border-top-color: rgb(255, 255, 255);
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+    border-top-style: none;
+    border-top-width: 0px;
+    box-sizing: border-box;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    font-family: Mija;
+    font-feature-settings: "onum";
+    font-size: 20.8108px;
+    font-stretch: 100%;
+    font-weight: 700;
+    height: 40.4px;
+    letter-spacing: normal;
+    line-height: 23.9324px;
+    outline-color: rgb(255, 255, 255);
+    outline-style: none;
+    outline-width: 0px;
+    position: relative;
+    text-align: center;
+    text-indent: 0px;
+    text-rendering: auto;
+    text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background-color: transparent;
 }

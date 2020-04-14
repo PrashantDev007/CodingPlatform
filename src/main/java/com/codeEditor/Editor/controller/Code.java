@@ -8,10 +8,11 @@ public class Code {
 
 	private String code;
 	private String id;
+	
 
 	public Code() {	
 	}
-
+	
 	public String getCode() {
 		return code;
 	}

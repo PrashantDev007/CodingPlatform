@@ -21,10 +21,7 @@ public class SendingAsyncDataToQueue {
 		try {
 		jsonString = mapper.writeValueAsString(response);
 		}catch( JsonProcessingException e)
-		{System.out.println("exception");}
-		
-		System.out.println("this is the final code");
-		
+		{System.out.println("exception");}		
 		messagingTemplate.convertAndSend("/topic/livescore-"+code.getId(),jsonString);
 		
 		

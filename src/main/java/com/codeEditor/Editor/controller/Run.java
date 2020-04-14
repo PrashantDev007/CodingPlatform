@@ -27,9 +27,9 @@ public class Run implements CompilerHelper {
 	@Override
 	public void execute(Code code) {
 		
-		
+		String rootPathForTheProject=System.getProperty("user.dir");
 
-		File dir = new File( "C:/Users/devpr/Desktop/java projects/Editor/CompiledAndRunnapleCode/" +code.getId()+ "/");
+		File dir = new File( rootPathForTheProject+"/CompiledAndRunnapleCode/" +code.getId()+ "/");
 		
 		File[] matches = dir.listFiles(new FilenameFilter()
 		{
@@ -42,14 +42,14 @@ public class Run implements CompilerHelper {
 		
 		
 		Process process = null;
-		String anyCommand = "java -classpath \"C:/Users/devpr/Desktop/java projects/Editor/CompiledAndRunnapleCode/" +code.getId()+"\" "+fileName;
+		String anyCommand =null;
+		anyCommand = "java -classpath \""+rootPathForTheProject+"/CompiledAndRunnapleCode/" +code.getId()+"\" "+fileName;
 		
 		try {
 			process = Runtime.getRuntime().exec(anyCommand);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-//-----------------------------
 			
 			BufferedReader stdOutput = new BufferedReader(new 
 			InputStreamReader(process.getInputStream()));

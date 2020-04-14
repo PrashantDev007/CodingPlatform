@@ -25,7 +25,7 @@ public class SocketController {
 	@SendToUser("/topic/livescores")	
 	public String getData(@RequestBody String paramMap  ) throws InterruptedException, JsonMappingException, JsonProcessingException
 	{
-		
+		 
 		System.out.println(paramMap);
 	
 		ObjectMapper mapper = new ObjectMapper();
@@ -34,7 +34,7 @@ public class SocketController {
 		
 		String code = map.get("code");
 		String codeId=map.get("sessionId");
-		
+//		String language=map.get("language");
 
 		if(code==null || code=="")return "{\"status\":200, \"result\" : \"input is empty\"}";
 		
@@ -42,26 +42,10 @@ public class SocketController {
 		c.setId(codeId);
 		c.setCode(code);
 		
+		
 		//when request came then put compiling.. for that id
-		SaveRequests.requests.put(c.getId(), "compiling...");
-				//
-		
-		
-		ts.produce(c);
-//		Thread.sleep(2000);
-//		
-//		Response response=new Response(200, SaveRequests.requests.get(c.getId())  );
-//
-//		String jsonString=null;
-//		try {
-//		jsonString = mapper.writeValueAsString(response);
-//		}catch( JsonProcessingException e)
-//		{System.out.println("exception");}
-//		
-//		System.out.println(jsonString+"final result");
-//		map.clear();
-//		SaveRequests.requests.clear();	
-		
+		SaveRequests.requests.put(c.getId(), "compiling...");		
+		ts.produce(c);		
 		sendingAsyncDataToQueue.sendData(c);
 		
 		return "";
