@@ -11,21 +11,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class SendingAsyncDataToQueue {
 
 	@Autowired
-    private SimpMessageSendingOperations messagingTemplate;
-	public void sendData(Code code)
-	{
-		
-		Response response=new Response(200, SaveRequests.requests.get(code.getId())  );
+	private SimpMessageSendingOperations messagingTemplate;
+
+	public void sendData(Code code) {
+
+		Response response = new Response(200, SaveRequests.requests.get(code.getId()));
 		ObjectMapper mapper = new ObjectMapper();
-		String jsonString=null;
+		String jsonString = null;
 		try {
-		jsonString = mapper.writeValueAsString(response);
-		}catch( JsonProcessingException e)
-		{System.out.println("exception");}		
-		messagingTemplate.convertAndSend("/topic/livescore-"+code.getId(),jsonString);
-		
-		
-		
+			jsonString = mapper.writeValueAsString(response);
+		} catch (JsonProcessingException e) {
+			System.out.println("exception");
+		}
+		messagingTemplate.convertAndSend("/topic/livescore-" + code.getId(), jsonString);
+
 	}
-	
+
 }

@@ -23,67 +23,51 @@ public class Run implements CompilerHelper {
 
 	@Autowired
 	SendingAsyncDataToQueue sendingAsyncDataToQueue;
-	
+
 	@Override
 	public void execute(Code code) {
-		
-		String rootPathForTheProject=System.getProperty("user.dir");
 
-		File dir = new File( rootPathForTheProject+"/CompiledAndRunnapleCode/" +code.getId()+ "/");
-		
-		File[] matches = dir.listFiles(new FilenameFilter()
-		{
-		  public boolean accept(File dir, String name)
-		  {
-		     return name.endsWith(".class");
-		  }
+		String rootPathForTheProject = System.getProperty("user.dir");
+
+		File dir = new File(rootPathForTheProject + "/CompiledAndRunnapleCode/" + code.getId() + "/");
+
+		File[] matches = dir.listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".class");
+			}
 		});
-		String fileName=matches[0].getName().substring(0,matches[0].getName().length() - 6);
-		
-		
+		String fileName = matches[0].getName().substring(0, matches[0].getName().length() - 6);
+
 		Process process = null;
-		String anyCommand =null;
-		anyCommand = "java -classpath \""+rootPathForTheProject+"/CompiledAndRunnapleCode/" +code.getId()+"\" "+fileName;
-		
+		String anyCommand = null;
+		anyCommand = "java -classpath \"" + rootPathForTheProject + "/CompiledAndRunnapleCode/" + code.getId() + "\" "
+				+ fileName;
+
 		try {
 			process = Runtime.getRuntime().exec(anyCommand);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-			
-			BufferedReader stdOutput = new BufferedReader(new 
-			InputStreamReader(process.getInputStream()));
-			
-		
-			String output=null;
-			
-			StringBuffer ans=new StringBuffer("");  
-			try {			
-				
-				while ((output = stdOutput.readLine()) != null) {
-				    ans=ans.append( output+"\n");
-				    
-				}
-			}catch(Exception e) {
-				System.out.println("runtime error");
-			}
-				
-			SaveRequests.requests.put(code.getId(), ans.toString());
-			
 
-			sendingAsyncDataToQueue.sendData(code);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-}
+		BufferedReader stdOutput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+		String output = null;
+
+		StringBuffer ans = new StringBuffer("");
+		try {
+
+			while ((output = stdOutput.readLine()) != null) {
+				ans = ans.append(output + "\n");
+
+			}
+		} catch (Exception e) {
+			System.out.println("runtime error");
+		}
+
+		SaveRequests.requests.put(code.getId(), ans.toString());
+
+		sendingAsyncDataToQueue.sendData(code);
 
 	}
 
-
+}

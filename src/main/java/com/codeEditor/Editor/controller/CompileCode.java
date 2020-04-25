@@ -18,30 +18,28 @@ class CompileCode implements CompilerHelper {
 	SendingAsyncDataToQueue sendingAsyncDataToQueue;
 	@Autowired
 	Run run;
-	
+
 	@Override
 	public void execute(Code code) {
-		
-		String rootPathForTheProject=System.getProperty("user.dir");
-			
-		java.io.File files = new java.io.File(
-				rootPathForTheProject+"\\CompiledAndRunnapleCode\\" + code.getId());
-		files.mkdir();
-		String anyCommand=null;
 
-		FileWriter fw=null;
+		String rootPathForTheProject = System.getProperty("user.dir");
+
+		java.io.File files = new java.io.File(rootPathForTheProject + "\\CompiledAndRunnapleCode\\" + code.getId());
+		files.mkdir();
+		String anyCommand = null;
+
+		FileWriter fw = null;
 
 		try {
-			
-	
-			 fw = new FileWriter(rootPathForTheProject+"\\CompiledAndRunnapleCode\\"
-					+ code.getId() + "\\" + code.getId() + ".java");	 
-				
-				
+
+			fw = new FileWriter(rootPathForTheProject + "\\CompiledAndRunnapleCode\\" + code.getId() + "\\"
+					+ code.getId() + ".java");
+
 //				 anyCommand = "\"C:\\MinGW\\bin\\g++\" -o"+" \""+rootPathForTheProject+"\\CompiledAndRunnapleCode\\"+code.getId()+"\\a.exe\" \""+rootPathForTheProject+"\\CompiledAndRunnapleCode\\"+code.getId()+"\\"+code.getId()+".cpp\"";
 
-		 anyCommand = "javac \""+rootPathForTheProject+"/CompiledAndRunnapleCode/" +code.getId()+ "/" + code.getId() + ".java\"";
-						
+			anyCommand = "javac \"" + rootPathForTheProject + "/CompiledAndRunnapleCode/" + code.getId() + "/"
+					+ code.getId() + ".java\"";
+
 			fw.write(code.getCode());
 			fw.close();
 		} catch (Exception e) {
@@ -49,46 +47,39 @@ class CompileCode implements CompilerHelper {
 		}
 		Process process = null;
 		try {
-			
+
 			process = Runtime.getRuntime().exec(anyCommand, null);
-			
+
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			System.out.println(e1+"exceptions");
+			System.out.println(e1 + "exceptions");
 		}
 
-			BufferedReader stdError = new BufferedReader(new 
-			     InputStreamReader(process.getErrorStream()));
+		BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-			boolean error=false;
-			String output = null;
-			StringBuffer ans=new StringBuffer(""); 
-			
-			try {					
-				while ((output = stdError.readLine()) != null) {
-					
-				    ans=ans.append( output+"\n");
-				    error=true;
-				}
-			}catch(Exception e) {
-				System.out.println("compilation error");
+		boolean error = false;
+		String output = null;
+		StringBuffer ans = new StringBuffer("");
+
+		try {
+			while ((output = stdError.readLine()) != null) {
+
+				ans = ans.append(output + "\n");
+				error = true;
 			}
-			
-			if(error==true)
-			{
-				SaveRequests.requests.put(code.getId(), ans.toString());
-				
-				sendingAsyncDataToQueue.sendData(code);
-			
-			}
-			else
-			{
-				
-				run.execute(code);		
-			}
-		
-		
-		
+		} catch (Exception e) {
+			System.out.println("compilation error");
+		}
+
+		if (error == true) {
+			SaveRequests.requests.put(code.getId(), ans.toString());
+
+			sendingAsyncDataToQueue.sendData(code);
+
+		} else {
+
+			run.execute(code);
+		}
 
 	}
 
