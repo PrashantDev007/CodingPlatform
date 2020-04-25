@@ -2,18 +2,48 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<script src="myscripts.js"></script>
 <title>Insert title here</title>
-<script src="./javascript/basic.js"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/javascript/jquery.min.js" type="text/javascript"></script> 	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.9/ace.min.js"></script>
+    <script src="/javascript/ajax.js"></script>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"> </link>
 </head>
 <body>
 <body>
 
-    <form name="loginForm" method="post" action="/run">
-        <label for="ta"></label>
-        <textarea name="textarea" id="ta" cols="30" rows="30"></textarea>
-        <button name="subject" id="buttonCode" value="code">compile</button>
+  
+  
+  
+    <form name="loginForm" method="post" id="makecall" class="form">
+
+        <div class="heading">Code Evaluator</div>
+        <div class="inputoutput">
+            <div class="input">Write the java code below</div>
+            <div class="output">Output</div>
+        </div>
+
+
+        <div id="textarea" class="textarea">
+
+            <textarea name="textarea" id="ta" wrap=off></textarea>
+            <textarea name="textarea" id="ta2" readonly></textarea>
+        </div>
+
+
+        <button name="subject" id="buttonCode" value="code">run</button>
+
+
     </form>
+  
+  
     
     
 </body>

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.apache.tomcat.jni.File;
 import org.jolokia.util.LogHandler.StdoutLogHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,55 +15,71 @@ import org.springframework.stereotype.Component;
 class CompileCode implements CompilerHelper {
 
 	@Autowired
+	SendingAsyncDataToQueue sendingAsyncDataToQueue;
+	@Autowired
 	Run run;
-	
+
 	@Override
 	public void execute(Code code) {
-			
-		java.io.File files = new java.io.File(
-				"C:\\Users\\devpr\\Desktop\\java projects\\Editor\\CompiledAndRunnapleCode\\" + code.getId());
+
+		String rootPathForTheProject = System.getProperty("user.dir");
+
+		java.io.File files = new java.io.File(rootPathForTheProject + "\\CompiledAndRunnapleCode\\" + code.getId());
 		files.mkdir();
+		String anyCommand = null;
+
+		FileWriter fw = null;
 
 		try {
-			FileWriter fw = new FileWriter("C:\\Users\\devpr\\Desktop\\java projects\\Editor\\CompiledAndRunnapleCode\\"
-					+ code.getId() + "\\" + code.getId() + ".java");
+
+			fw = new FileWriter(rootPathForTheProject + "\\CompiledAndRunnapleCode\\" + code.getId() + "\\"
+					+ code.getId() + ".java");
+
+//				 anyCommand = "\"C:\\MinGW\\bin\\g++\" -o"+" \""+rootPathForTheProject+"\\CompiledAndRunnapleCode\\"+code.getId()+"\\a.exe\" \""+rootPathForTheProject+"\\CompiledAndRunnapleCode\\"+code.getId()+"\\"+code.getId()+".cpp\"";
+
+			anyCommand = "javac \"" + rootPathForTheProject + "/CompiledAndRunnapleCode/" + code.getId() + "/"
+					+ code.getId() + ".java\"";
+
 			fw.write(code.getCode());
 			fw.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		Process process = null;
-		String anyCommand = "javac \"C:/Users/devpr/Desktop/java projects/Editor/CompiledAndRunnapleCode/" +code.getId()+ "/" + code.getId() + ".java\"";
 		try {
-			process = Runtime.getRuntime().exec(anyCommand);
+
+			process = Runtime.getRuntime().exec(anyCommand, null);
+
 		} catch (IOException e1) {
 			e1.printStackTrace();
+			System.out.println(e1 + "exceptions");
 		}
 
-			BufferedReader stdError = new BufferedReader(new 
-			     InputStreamReader(process.getErrorStream()));
+		BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-			boolean error=false;
-			String output = null;
-			StringBuffer ans=new StringBuffer("");  
-			try {					
-				while ((output = stdError.readLine()) != null) {
-				    ans=ans.append( output+"\n");
-				    error=true;
-				}
-			}catch(Exception e) {
-				System.out.println("compilation error");
+		boolean error = false;
+		String output = null;
+		StringBuffer ans = new StringBuffer("");
+
+		try {
+			while ((output = stdError.readLine()) != null) {
+
+				ans = ans.append(output + "\n");
+				error = true;
 			}
-			
-			if(error==true)
-			{SaveRequests.requests.put(code.getId(), ans.toString());}
-			else
-			{
-				run.execute(code);		
-			}
-		
-		
-		
+		} catch (Exception e) {
+			System.out.println("compilation error");
+		}
+
+		if (error == true) {
+			SaveRequests.requests.put(code.getId(), ans.toString());
+
+			sendingAsyncDataToQueue.sendData(code);
+
+		} else {
+
+			run.execute(code);
+		}
 
 	}
 
